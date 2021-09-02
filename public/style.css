@@ -3,6 +3,10 @@ body {
   padding: 20px;
 }
 
+a {
+  text-decoration: none;
+}
+
 textarea {
   width: 300px;
 }
