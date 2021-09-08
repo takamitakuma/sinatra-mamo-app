@@ -19,7 +19,7 @@ get '/memos' do
 end
 
 get '/memos/new' do
-  erb :memos_new
+  erb :create_memo
 end
 
 post '/memos' do
@@ -36,7 +36,7 @@ get '/memos/:id' do |id|
     @memo = memos[id]
     @id = id
   end
-  erb :show_page
+  erb :show_memo
 end
 
 delete '/memos/:id' do |id|
