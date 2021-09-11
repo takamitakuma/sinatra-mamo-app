@@ -1,9 +1,9 @@
-<p class="title"><%= h(@memo["title"]) %></p>
-<p class="content"><%= h(@memo["memo"]) %></p>
-<form method="GET" action="/memos/<%= @id %>/edit">
+<p class="title"><%= h(@memo[0]["title"]) %></p>
+<p class="content"><%= h(@memo[0]["content"]) %></p>
+<form method="GET" action="/memos/<%= @memo[0]["id"] %>/edit">
   <input type="submit" value="変更" class="button">
 </form> 
-<form method="POST" action="/memos/<%= @id %>">
+<form method="POST" action="/memos/<%= @memo[0]["id"] %>">
   <input type="hidden" name="_method" value="delete">
   <input type="submit" value="削除" class="button right-button"> 
 </form>

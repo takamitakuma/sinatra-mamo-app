@@ -4,6 +4,7 @@ require 'sinatra'
 require 'sinatra/reloader'
 require 'json'
 require 'securerandom'
+require 'pg'
 
 helpers do
   def h(text)
@@ -11,10 +12,14 @@ helpers do
   end
 end
 
+conn = PG.connect(
+  host: 'localhost',
+  dbname: 'memo',
+  port: '5432'
+)
+
 get '/memos' do
-  File.open('json/memos.json', 'r') do |file|
-    @memos = JSON.parse(file.read)
-  end
+  @memos = conn.exec('SELECT * FROM memo')
   erb :memos
 end
 
@@ -23,42 +28,31 @@ get '/memos/new' do
 end
 
 post '/memos' do
-  hash = File.open('json/memos.json') { |file| JSON.parse(file.read) }
-  hash[SecureRandom.uuid] = { 'title' => params[:title], 'memo' => params[:memo] }
-  json = JSON.pretty_generate(hash)
-  File.open('json/memos.json', 'w') { |file| file.puts(json) }
+  id = SecureRandom.uuid
+  title = params[:title]
+  memo = params[:memo]
+  conn.exec('INSERT INTO memo VALUES($1, $2, $3);', [id, title, memo])
   redirect to('/memos')
 end
 
 get '/memos/:id' do |id|
-  File.open('json/memos.json', 'r') do |file|
-    memos = JSON.parse(file.read)
-    @memo = memos[id]
-    @id = id
-  end
+  @memo = conn.exec('SELECT * FROM memo WHERE id = $1;', [id])
   erb :show_memo
 end
 
 delete '/memos/:id' do |id|
-  hash = File.open('json/memos.json') { |file| JSON.parse(file.read) }
-  hash.delete(id)
-  json = JSON.pretty_generate(hash)
-  File.open('json/memos.json', 'w') { |file| file.puts(json) }
+  conn.exec('DELETE FROM memo WHERE id = $1;', [id])
   redirect to('/memos')
 end
 
 get '/memos/:id/edit' do |id|
-  hash = File.open('json/memos.json') { |file| JSON.parse(file.read) }
-  @memo = hash[id]
-  @id = id
+  @memo = conn.exec('SELECT * FROM memo WHERE id = $1;', [id])
   erb :edit_memo
 end
 
 patch '/memos/:id' do |id|
-  hash = File.open('json/memos.json') { |file| JSON.parse(file.read) }
-  hash[id]['title'] = params[:title]
-  hash[id]['memo'] = params[:memo]
-  json = JSON.pretty_generate(hash)
-  File.open('json/memos.json', 'w') { |file| file.puts(json) }
+  title = params[:title]
+  memo = params[:memo]
+  conn.exec('UPDATE memo SET title = $1, content = $2 WHERE id = $3;', [title, memo, id])
   redirect to('/memos')
 end
