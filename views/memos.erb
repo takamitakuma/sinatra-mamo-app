@@ -1,6 +1,6 @@
-<% @memos.each do |id, memo| %>
+<% @memos.each do |memo| %>
   <ul>
-    <li><a href="/memos/<%= id %>"><%= h(memo["title"]) %></a><br></li>
+    <li><a href="/memos/<%= memo["id"] %>"><%= h(memo["title"]) %></a><br></li>
   </ul>
 <% end %>
 <form method="GET" action="/memos/new">

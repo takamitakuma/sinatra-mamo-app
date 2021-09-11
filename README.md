@@ -18,3 +18,10 @@ sinatra 2.1.0
 4. `bundle exec ruby app.rb`でアプリを実行します。
 5. ブラウザを開き、`localhost:4567/memos`にアクセスするとアプリが表示されます。
 
+このアプリはPostgreSQLを使っています。
+アプリを実行する前に`memo`という名前のテーブルを作成して下さい。
+1. `psql -U ユーザ名`でPostgreSQLにログインしてください。
+2. `CREATE DATEBASE memo;`を実行し、データベースを作成します。
+3. `quit`で一度psqlを終了してください。
+4. `psql -U ユーザ名 memo`でmemoに接続します。
+5. `CREATE TABLE memo(id VARCHAR(36) NOT NULL, title VARCHAR(100), content text, PRIMARY KEY (id));`を実行し、メモテーブルを作成して下さい。
