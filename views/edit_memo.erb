@@ -1,0 +1,8 @@
+<form action="/memos/<%= @id %>" method="POST">
+  <p>タイトル</p>
+  <input type="text" name="title" value="<%= h(@memo["title"]) %>" required="required">
+  <p>メモ内容</P>
+  <textarea name="memo" rows=5 required="required"><%= h(@memo["memo"]) %></textarea><br>
+  <input type="hidden" name="_method" value="patch">
+  <input type="submit" value="変更">
+</form>

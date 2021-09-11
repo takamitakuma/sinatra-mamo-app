@@ -17,3 +17,4 @@ sinatra 2.1.0
 3. `bundle install`で、Gemfileに記載があるGemをインストールしてください。
 4. `bundle exec ruby app.rb`でアプリを実行します。
 5. ブラウザを開き、`localhost:4567/memos`にアクセスするとアプリが表示されます。
+

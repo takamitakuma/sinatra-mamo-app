@@ -1,0 +1,37 @@
+body {
+  color: black;
+  padding: 20px;
+}
+
+a {
+  text-decoration: none;
+}
+
+textarea {
+  width: 300px;
+}
+
+a:visited {
+  color: inherit;
+}
+
+form {
+  margin-top: 20px;
+}
+
+.form-buttons {
+  float: left;
+}
+
+.button {
+  border-radius: 5px;
+  float: left;
+}
+
+.right-button {
+  margin-left: 10px;
+}
+
+.content {
+  font-size: 20px;
+}
